@@ -1,11 +1,11 @@
 @extends('layout.main')
 
 @push('style')
-    <link rel="stylesheet" href="{{asset('sneat/vendor/libs/apex-charts/apex-charts.css')}}" />
+    <link rel="stylesheet" href="{{ asset('sneat/vendor/libs/apex-charts/apex-charts.css') }}" />
 @endpush
 
 @push('script')
-    <script src="{{asset('sneat/vendor/libs/apex-charts/apexcharts.js')}}"></script>
+    <script src="{{ asset('sneat/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script>
         const options = {
             chart: {
@@ -13,7 +13,7 @@
             },
             series: [{
                 name: '{{ __('dashboard.letter_transaction') }}',
-                data: [{{ $todayIncomingLetter }},{{ $todayOutgoingLetter }},{{ $todayDispositionLetter }}]
+                data: [{{ $todayIncomingLetter }}, {{ $todayOutgoingLetter }}, {{ $todayDispositionLetter }}]
             }],
             stroke: {
                 curve: 'smooth',
@@ -49,9 +49,9 @@
                     </div>
                     <div class="col-sm-5 text-center text-sm-left">
                         <div class="card-body pb-0 px-0 px-md-4">
-                            <img src="{{asset('sneat/img/man-with-laptop-light.png')}}" height="140"
-                                 alt="View Badge User" data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                                 data-app-light-img="illustrations/man-with-laptop-light.png">
+                            <img src="{{ asset('sneat/img/man-with-laptop-light.png') }}" height="140"
+                                alt="View Badge User" data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                                data-app-light-img="illustrations/man-with-laptop-light.png">
                         </div>
                     </div>
                 </div>
@@ -61,17 +61,17 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between flex-sm-row flex-column gap-3"
-                             style="position: relative;">
+                            style="position: relative;">
                             <div class="">
                                 <div class="card-title">
                                     <h5 class="text-nowrap mb-2">{{ __('dashboard.today_graphic') }}</h5>
                                     <span class="badge bg-label-warning rounded-pill">{{ __('dashboard.today') }}</span>
                                 </div>
                                 <div class="mt-sm-auto">
-                                    @if($percentageLetterTransaction > 0)
-                                    <small class="text-success text-nowrap fw-semibold">
-                                        <i class="bx bx-chevron-up"></i> {{ $percentageLetterTransaction }}%
-                                    </small>
+                                    @if ($percentageLetterTransaction > 0)
+                                        <small class="text-success text-nowrap fw-semibold">
+                                            <i class="bx bx-chevron-up"></i> {{ $percentageLetterTransaction }}%
+                                        </small>
                                     @elseif($percentageLetterTransaction < 0)
                                         <small class="text-danger text-nowrap fw-semibold">
                                             <i class="bx bx-chevron-down"></i> {{ $percentageLetterTransaction }}%
@@ -91,88 +91,40 @@
         <div class="col-lg-4 col-md-4 order-1">
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-6 mb-4">
-                    <x-dashboard-card-simple
-                        :label="__('dashboard.incoming_letter')"
-                        :value="$todayIncomingLetter"
-                        :daily="true"
-                        color="secondary"
-                        icon="bx-envelope"
-                        :percentage="$percentageIncomingLetter"
-                    />
+                    <x-dashboard-card-simple :label="__('dashboard.incoming_letter')" :value="$todayIncomingLetter" :daily="true" color="secondary"
+                        icon="bx-envelope" :percentage="$percentageIncomingLetter" />
                 </div>
                 <div class="col-lg-6 col-md-12 col-6 mb-4">
-                    <x-dashboard-card-simple
-                        :label="__('dashboard.outgoing_letter')"
-                        :value="$todayOutgoingLetter"
-                        :daily="true"
-                        color="warning"
-                        icon="bx-envelope"
-                        :percentage="$percentageOutgoingLetter"
-                    />
-                </div>
-              	<div class="col-lg-6 col-md-12 col-6 mb-4">
-                    <x-dashboard-card-simple
-                        :label="__('dashboard.not_esign')"
-                        :value="$noEsignLetter"
-                        :daily="true"
-                        color="danger"
-                        icon="bx-envelope"
-                        :percentage="0"
-                    />
+                    <x-dashboard-card-simple :label="__('dashboard.outgoing_letter')" :value="$todayOutgoingLetter" :daily="true" color="warning"
+                        icon="bx-envelope" :percentage="$percentageOutgoingLetter" />
                 </div>
                 <div class="col-lg-6 col-md-12 col-6 mb-4">
-                    <x-dashboard-card-simple
-                        :label="__('dashboard.esign')"
-                        :value="$esignLetter"
-                        :daily="true"
-                        color="success"
-                        icon="bx-envelope"
-                        :percentage="0"
-                    />
-                </div>
-              	<div class="col-lg-6 col-md-12 col-6 mb-4">
-                    <x-dashboard-card-simple
-                        :label="__('dashboard.disposition_letter')"
-                        :value="$todayDispositionLetter"
-                        :daily="true"
-                        color="primary"
-                        icon="bx-envelope"
-                        :percentage="$percentageDispositionLetter"
-                    />
+                    <x-dashboard-card-simple :label="__('dashboard.not_esign')" :value="$noEsignLetter" :daily="true" color="danger"
+                        icon="bx-envelope" :percentage="0" />
                 </div>
                 <div class="col-lg-6 col-md-12 col-6 mb-4">
-                    <x-dashboard-card-simple
-                        :label="__('dashboard.esign_average')"
-                        :value="$esignAveragePerDay"
-                        :daily="false"
-                        color="info"
-                        icon="bx-user-check"
-                        :percentage="$percentageEsignAverage"
-                    />
+                    <x-dashboard-card-simple :label="__('dashboard.esign')" :value="$esignLetter" :daily="true" color="success"
+                        icon="bx-envelope" :percentage="0" />
                 </div>
-              	<div class="col-lg-6 col-md-12 col-6 mb-4">
-                    <x-dashboard-card-simple
-                        :label="__('dashboard.not_esign_all')"
-                        :value="$noEsignAllLetter"
-                        :daily="false"
-                        color="danger"
-                        icon="bx-envelope"
-                        :percentage="0"
-                    />
+                <div class="col-lg-6 col-md-12 col-6 mb-4">
+                    <x-dashboard-card-simple :label="__('dashboard.disposition_letter')" :value="$todayDispositionLetter" :daily="true" color="primary"
+                        icon="bx-envelope" :percentage="$percentageDispositionLetter" />
                 </div>
-              	<div class="col-lg-6 col-md-12 col-6 mb-4">
-                    <x-dashboard-card-simple
-                        :label="__('dashboard.esign_all')"
-                        :value="$esignAllLetter"
-                        :daily="false"
-                        color="success"
-                        icon="bx-envelope"
-                        :percentage="0"
-                    />
+                <div class="col-lg-6 col-md-12 col-6 mb-4">
+                    <x-dashboard-card-simple :label="__('dashboard.esign_average')" :value="$esignAveragePerDay" :daily="false" color="info"
+                        icon="bx-user-check" :percentage="$percentageEsignAverage" />
+                </div>
+                <div class="col-lg-6 col-md-12 col-6 mb-4">
+                    <x-dashboard-card-simple :label="__('dashboard.not_esign_all')" :value="$noEsignAllLetter" :daily="false" color="danger"
+                        icon="bx-envelope" :percentage="0" />
+                </div>
+                <div class="col-lg-6 col-md-12 col-6 mb-4">
+                    <x-dashboard-card-simple :label="__('dashboard.esign_all')" :value="$esignAllLetter" :daily="false" color="success"
+                        icon="bx-envelope" :percentage="0" />
                 </div>
             </div>
         </div>
-		<div class="col-lg-12 col-md-8 order-1">
+        <div class="col-lg-12 col-md-8 order-1">
             <div class="row">
                 <h2><b>Flow Chart Surat Keluar</b></h2>
                 <img src="{{ asset('alur-masdipo-keluar.jpg') }}" alt="">

@@ -8,28 +8,25 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
-        Schema::create('classifications', function (Blueprint $table) {
+        Schema::create('sessions', function (Blueprint $table) {
             $table->id();
-            // $table->string('code')->unique();
-            $table->string('code')->unique();
-            $table->string('type');
-            $table->text('description')->nullable();
+            $table->string('user_id');
+            $table->string('ip_address');
+            $table->text('user_agent');
+            $table->longtext('payload');
+            $table->integer('last_activity');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {
-        Schema::dropIfExists('classifications');
+        Schema::dropIfExists('sessions');
     }
 };

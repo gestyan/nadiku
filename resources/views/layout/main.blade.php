@@ -17,7 +17,7 @@
     class="light-style layout-menu-fixed"
     dir="ltr"
     data-theme="theme-default"
-    data-assets-path="{{ asset('public/sneat/') }}"
+    data-assets-path="/public/sneat/') }}"
     data-template="vertical-menu-template-free"
 >
 <head>
@@ -32,7 +32,7 @@
     <meta name="description" content=""/>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('logo-black.png') }}"/>
+    <link rel="icon" type="image/x-icon" href="/logo-black.png"/>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -43,18 +43,18 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{asset('sneat/vendor/fonts/boxicons.css')}}"/>
+    <link rel="stylesheet" href="/sneat/vendor/fonts/boxicons.css"/>
 
     <!-- Core CSS -->
-    <link rel="stylesheet" class="template-customizer-core-css" href="{{asset('sneat/vendor/css/core.css')}}"/>
+    <link rel="stylesheet" class="template-customizer-core-css" href="/sneat/vendor/css/core.css"/>
     <link rel="stylesheet" class="template-customizer-theme-css"
-          href="{{asset('sneat/vendor/css/theme-default.css')}}"/>
-    <link rel="stylesheet" href="{{asset('sneat/css/demo.css')}}"/>
+          href="/sneat/vendor/css/theme-default.css"/>
+    <link rel="stylesheet" href="/sneat/css/demo.css"/>
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{asset('sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}"/>
-    <link rel="stylesheet" href="{{asset('sneat/vendor/libs/sweetalert2/sweetalert2.min.css')}}"/>
-    
+    <link rel="stylesheet" href="/sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"/>
+    <link rel="stylesheet" href="/sneat/vendor/libs/sweetalert2/sweetalert2.min.css"/>
+
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -62,11 +62,11 @@
     @stack('style')
 
     <!-- Helpers -->
-    <script src="{{ asset('sneat/vendor/js/helpers.js') }}"></script>
+    <script src="/sneat/vendor/js/helpers.js"></script>
 
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{ asset('sneat/js/config.js') }}"></script>
+        <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+        <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+        <script src=" /sneat/js/config.js"></script>
 </head>
 
 <body>
@@ -109,24 +109,24 @@
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
-<script src="{{ asset('sneat/vendor/libs/jquery/jquery.js')}}"></script>
-<script src="{{ asset('sneat/vendor/libs/popper/popper.js')}}"></script>
-<script src="{{ asset('sneat/vendor/js/bootstrap.js')}}"></script>
-<script src="{{ asset('sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+<script src="/sneat/vendor/libs/jquery/jquery.js"></script>
+<script src="/sneat/vendor/libs/popper/popper.js"></script>
+<script src="/sneat/vendor/js/bootstrap.js"></script>
+<script src="/sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<script src="{{ asset('sneat/vendor/js/menu.js')}}"></script>
+<script src="/sneat/vendor/js/menu.js"></script>
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="{{ asset('sneat/vendor/libs/masonry/masonry.js')}}"></script>
-<script src="{{ asset('sneat/vendor/libs/sweetalert2/sweetalert2.all.min.js')}}"></script>
+<script src="/sneat/vendor/libs/masonry/masonry.js"></script>
+<script src="/sneat/vendor/libs/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
 <!-- Main JS -->
-<script src="{{ asset('sneat/js/main.js')}}"></script>
+<script src="/sneat/js/main.js"></script>
 <script>
-    $(document).on('click', '.btn-delete', function (req) {
+    $(document).on('click', '.btn-delete', function(req) {
         Swal.fire({
             title: '{{ __('menu.general.delete_confirm') }}',
             text: "{{ __('menu.general.delete_warning') }}",
@@ -136,36 +136,36 @@
             confirmButtonText: '{{ __('menu.general.delete') }}',
             cancelButtonText: '{{ __('menu.general.cancel') }}'
         }).then((result) => {
-                if (result.isConfirmed) {
-                    $(this).parent('form').submit();
-                }
-            })
+            if (result.isConfirmed) {
+                $(this).parent('form').submit();
+            }
+        })
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('.multiple-select').select2();
     });
-  
-  	$("#satker").on('change', function(){
-    	if($(this).val() == '02600'){
-          	num = $(this).data("num2600");
-          	num = parseInt(num) + 1;
-        	$("#number").val(num);
-          	//num = parseInt(num.replace(/^0+/, "")) + 1;
-        	//$("#number").val(String(num).padStart(4, "0"))
-        } else if($(this).val() == '02610') {
-          	num = $(this).data("num2610");
-          	num = parseInt(num) + 1;
-        	$("#number").val(num);
-          	//num = parseInt(num.replace(/^0+/, "")) + 1;
-        	//$("#number").val(String(num).padStart(4, "0"))
+
+    $("#satker").on('change', function() {
+        if ($(this).val() == '02600') {
+            num = $(this).data("num2600");
+            num = parseInt(num) + 1;
+            $("#number").val(num);
+            //num = parseInt(num.replace(/^0+/, "")) + 1;
+            //$("#number").val(String(num).padStart(4, "0"))
+        } else if ($(this).val() == '02610') {
+            num = $(this).data("num2610");
+            num = parseInt(num) + 1;
+            $("#number").val(num);
+            //num = parseInt(num.replace(/^0+/, "")) + 1;
+            //$("#number").val(String(num).padStart(4, "0"))
         }
     })
 
     $("#get_reference_number").click(function() {
         let status = $('#status').val();
         let number = $('#number').val();
-      	let satker = $('#satker').val();
+        let satker = $('#satker').val();
         let classification = $('#classification_code').val();
         // let month = new Date().getMonth() + 1;
         let year = new Date().getFullYear();
@@ -177,27 +177,27 @@
 <!-- Page JS -->
 @stack('script')
 
-@if(session('success'))
-    <script>
-        Toast.fire({
-            icon: 'success',
-            title: '{{ session('success') }}'
-        })
-    </script>
+@if (session('success'))
+<script>
+    Toast.fire({
+        icon: 'success',
+        title: '{{ session('success') }}'
+    })
+</script>
 @elseif(session('error'))
-    <script>
-        Toast.fire({
-            icon: 'error',
-            title: '{{ session('error') }}'
-        })
-    </script>
+<script>
+    Toast.fire({
+        icon: 'error',
+        title: '{{ session('error') }}'
+    })
+</script>
 @elseif(session('info'))
-    <script>
-        Toast.fire({
-            icon: 'info',
-            title: '{{ session('info') }}'
-        })
-    </script>
+<script>
+    Toast.fire({
+        icon: 'info',
+        title: '{{ session('info') }}'
+    })
+</script>
 @endif
 
 <!-- Place this tag in your head or just before your close body tag. -->

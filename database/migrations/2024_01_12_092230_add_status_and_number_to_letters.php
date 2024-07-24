@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('letters', function (Blueprint $table) {
             $table->string('status');
-            $table->string('number');
+            $table->string('number')->default(rand(0,100));
         });
     }
 
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('letters', function (Blueprint $table) {
-            
+
         });
     }
 };

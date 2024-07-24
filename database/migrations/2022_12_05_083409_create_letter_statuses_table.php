@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('letter_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('status');
+            $table->string('code');
             $table->timestamps();
         });
     }

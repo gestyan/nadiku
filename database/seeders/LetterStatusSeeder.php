@@ -18,16 +18,19 @@ class LetterStatusSeeder extends Seeder
         LetterStatus::insert([
             [
                 'status' => 'Rahasia',
+                'code'  => 'R',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'status' => 'Segera',
+                'code'  => 'S',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'status' => 'Biasa',
+                'code'  => 'B',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

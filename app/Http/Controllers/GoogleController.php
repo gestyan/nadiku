@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Exception;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class GoogleController extends Controller
 {
@@ -19,7 +20,7 @@ class GoogleController extends Controller
     {
         return Socialite::driver('google')->redirect();
     }
-          
+
     /**
      * Create a new controller instance.
      *
@@ -27,32 +28,22 @@ class GoogleController extends Controller
      */
     public function handleGoogleCallback()
     {
+        // try {
         try {
-        
             $user = Socialite::driver('google')->user();
-         
-            $finduser = User::where('google_id', $user->id)->first();
-         
-            if($finduser){
-         
-                Auth::login($finduser);
-        
-                return redirect()->intended('/');
-         
+            $finduser = User::where('email', $user->email)->first();
+            if($finduser !== NULL){
+                Auth()->login($finduser);
             }else{
-                // dd($finduser);
-                 $updateUser = tap(User::where('email', "$user->email"))->update([
-                         'google_id'=> $user->id,
-                         'password' => encrypt('123456dummy')
-                     ])->first();
-         
-                 Auth::login($updateUser);
-        
-                 return redirect()->intended('/');
+                return redirect()->route('login');
             }
-        
-        } catch (Exception $e) {
-            dd($e->getMessage());
+            return redirect()->route('home');
         }
+        catch(Exception $e)
+        {
+            return redirect()->route('login');
+        }
+
+
     }
 }

@@ -64,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('classification', \App\Http\Controllers\ClassificationController::class)->except(['show', 'create', 'edit']);
         Route::resource('status', \App\Http\Controllers\LetterStatusController::class)->except(['show', 'create', 'edit']);
     });
-  
+
   	Route::get('template_letter', [\App\Http\Controllers\PageController::class, 'template'])->name('pages.template');
 });
 

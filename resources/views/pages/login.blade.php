@@ -17,7 +17,7 @@
     class="light-style customizer-hide"
     dir="ltr"
     data-theme="theme-default"
-    data-assets-path="{{ asset('public/sneat/') }}"
+    data-assets-path="/public/sneat/"
     data-template="vertical-menu-template-free"
 >
 <head>
@@ -32,7 +32,7 @@
     <meta name="description" content=""/>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{asset('sneat/img/favicon/favicon.ico')}}"/>
+    <link rel="icon" type="image/x-icon" href="/sneat/img/favicon/favicon.ico"/>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -43,16 +43,16 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{asset('sneat/vendor/fonts/boxicons.css')}}"/>
+    <link rel="stylesheet" href="/sneat/vendor/fonts/boxicons.css"/>
 
     <!-- Core CSS -->
-    <link rel="stylesheet" class="template-customizer-core-css" href="{{asset('sneat/vendor/css/core.css')}}"/>
+    <link rel="stylesheet" class="template-customizer-core-css" href="/sneat/vendor/css/core.css"/>
     <link rel="stylesheet" class="template-customizer-theme-css"
-          href="{{asset('sneat/vendor/css/theme-default.css')}}"/>
-    <link rel="stylesheet" href="{{asset('sneat/css/demo.css')}}"/>
+          href="/sneat/vendor/css/theme-default.css"/>
+    <link rel="stylesheet" href="/sneat/css/demo.css"/>
 
     <!-- Page -->
-    <link rel="stylesheet" href="{{asset('sneat/vendor/css/pages/page-auth.css')}}"/>
+    <link rel="stylesheet" href="/sneat/vendor/css/pages/page-auth.css"/>
 </head>
 
 <body>
@@ -67,7 +67,7 @@
                     <!-- Logo -->
                     <div class="app-brand justify-content-center">
                         <a href="{{ route('home') }}" class="app-brand-link gap-2">
-                            <img src="{{ asset('logo-black.png') }}" alt="{{ config('app.name') }}" srcset="" width="75px">
+                            <img src="/logo-black.jpg" alt="{{ config('app.name') }}" srcset="" width="75px">
                         </a>
                     </div>
 
@@ -93,7 +93,7 @@
 
                         <div class="d-flex justify-content-center mt-4">
                             <a href="{{ route('auth.google') }}" class="btn btn-secondary w-100">
-                                <img src="{{ asset('google-logo.png') }}" class="me-2" alt="" width="30">
+                                <img src="/google-logo.png" class="me-2" alt="" width="30">
                                 <span>Continue with Google</span>
                             </a>
                         </div>

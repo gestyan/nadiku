@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('letters', function (Blueprint $table) {
-            $table->string('send_status');
-            $table->string('esign_status');
+            $table->string('send_status')->default(0);
+            $table->string('esign_status')->default(0);
         });
     }
 

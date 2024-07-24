@@ -20,7 +20,7 @@ class LetterFactory extends Factory
     {
         return [
             'reference_number' => $this->faker->ean13(),
-            'agenda_number' => $this->faker->randomNumber(5),
+            'disposition_number' => $this->faker->randomNumber(5),
             'from' => $this->faker->name('male'),
             'to' => $this->faker->name('female'),
             'letter_date' => $this->faker->date(),
@@ -30,6 +30,7 @@ class LetterFactory extends Factory
             'type' => $this->faker->randomElement([LetterType::INCOMING->type(), LetterType::OUTGOING->type()]),
             'classification_code' => 'ADM',
             'user_id' => 1,
+            'status'  => array_rand(['R','B', 'S']),
         ];
     }
 }

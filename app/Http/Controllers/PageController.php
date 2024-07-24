@@ -37,19 +37,19 @@ class PageController extends Controller
         $yesterdayOutgoingLetter = Letter::outgoing()->yesterday()->count();
         $yesterdayDispositionLetter = Disposition::yesterday()->count();
         $yesterdayLetterTransaction = $yesterdayIncomingLetter + $yesterdayOutgoingLetter + $yesterdayDispositionLetter;
-      
+
       	$noEsignLetter = Letter::outgoing()->where('esign_status', 0)->today()->count();
       	$noEsignAllLetter = Letter::outgoing()->where('esign_status', 0)->count();
         $esignLetter = Letter::outgoing()->where('esign_status', 1)->today()->count();
       	$esignAllLetter = Letter::outgoing()->where('esign_status', 1)->count();
-      
+
       	$esignAverage = Letter::outgoing()->where('esign_status', 1)->count();
         $days = Letter::outgoing()->distinct()->count('letter_date');
       	$esignAverageBefore = Letter::outgoing()->where('esign_status', 1)->where('letter_date', '<', now())->count();
 		$days_before = Letter::outgoing()->where('letter_date', '<', now())->distinct()->count('letter_date');
-      
-      	//dd(round($esignAverage / $days_before));
 
+        ($days == 0) ? $days = 1 : $days = $days;
+        ($days_before == 0) ? $days_before = 1 : $days_before = $days_before;
 
         return view('pages.dashboard', [
             'greeting' => GeneralHelper::greeting(),
@@ -64,7 +64,7 @@ class PageController extends Controller
             'esignLetter' => $esignLetter,
           	'esignAllLetter' => $esignAllLetter,
           	'esignAveragePerDay' => round($esignAverage / $days),
-          
+
             'percentageIncomingLetter' => GeneralHelper::calculateChangePercentage($yesterdayIncomingLetter, $todayIncomingLetter),
             'percentageOutgoingLetter' => GeneralHelper::calculateChangePercentage($yesterdayOutgoingLetter, $todayOutgoingLetter),
             'percentageDispositionLetter' => GeneralHelper::calculateChangePercentage($yesterdayDispositionLetter, $todayDispositionLetter),
@@ -178,7 +178,7 @@ class PageController extends Controller
             return back()->with('error', $exception->getMessage());
         }
     }
-  
+
   	/**
      * @return View
      */
