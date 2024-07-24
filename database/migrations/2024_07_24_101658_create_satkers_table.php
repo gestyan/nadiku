@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id');
-            $table->bigInteger('user_id');
-            $table->string('ip_address');
-            $table->text('user_agent');
-            $table->longtext('payload');
-            $table->integer('last_activity');
+        Schema::create('satkers', function (Blueprint $table) {
+            $table->id();
+            $table->string('kode', length:10);
+            $table->string('deskripsi', length:100);
         });
     }
 
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('satkers');
     }
 };

@@ -34,7 +34,7 @@ class OutgoingLetterController extends Controller
      */
     public function index(Request $request): View
     {
-      
+
         if(auth()->user()->role != 'admin'){
             $data = Letter::outgoing()->where('user_id', auth()->user()->id)
             ->with(['attachments', 'classification'])
@@ -68,7 +68,7 @@ class OutgoingLetterController extends Controller
             'users' => User::all(),
         ]);
     }
-  
+
   	public function all(Request $request): View
     {
 
@@ -178,11 +178,11 @@ class OutgoingLetterController extends Controller
      */
     public function create(): View
     {
-      	$num2600 = Letter::outgoing()->where('satker', '02600')->orderBy('number', 'DESC')->first();
-      	$num2610 = Letter::outgoing()->where('satker', '02610')->orderBy('number', 'DESC')->first();
+      	$num2600 = Letter::outgoing()->where('satker', '11110')->orderBy('number', 'DESC')->first();
+      	$num2610 = Letter::outgoing()->where('satker', '11111')->orderBy('number', 'DESC')->first();
       	if($num2600 == NULL) $num2600 = '0000'; else $num2600 = (int) $num2600->number;
         if($num2610 == NULL) $num2610 = '0000'; else $num2610 = (int) $num2610->number;
-      
+
       	return view('pages.transaction.outgoing.create', [
                 'classifications' => Classification::orderBy('code')->get(),
                 'statuses' => LetterStatus::all(),
@@ -190,9 +190,9 @@ class OutgoingLetterController extends Controller
               	'satkers' => Satker::all(),
               	'num2600' => $num2600,
               	'num2610' => $num2610,
-                'numLetter' => Letter::outgoing()->orderBy('number', 'DESC')->first()->number,
+                'numLetter' => Letter::outgoing()->orderBy('number', 'DESC')->first(),
             ]);
-      	
+
       	/**
       	if(Letter::outgoing()->count() != 0){
           	if($num2600 == NULL) $num2600 = '0000';
@@ -236,12 +236,12 @@ class OutgoingLetterController extends Controller
             if ($request->type != LetterType::OUTGOING->type())
                 throw new \Exception(__('menu.transaction.outgoing_letter'));
             $newLetter = $request->validated();
-          
+
           	$lastNumber = Letter::where('satker', $request->satker)->orderBy('number', 'DESC')->first()->number;
-          	
+
           	// Check String Using preg_match() Function
 			$pattern = '/^[0-9]+$/'; // only number string
-          	
+
           	if(preg_match($pattern, $request->number)){
             	if($request->number <= (int) $lastNumber){
                     $newNumber = (int)$lastNumber;
@@ -250,13 +250,13 @@ class OutgoingLetterController extends Controller
                     $newReferenceNumber = str_replace($request->number, $newNumber, $request->reference_number);
             	} else {
                 	$newNumber = $request->number;
-                	$newReferenceNumber = $request->reference_number;	
+                	$newReferenceNumber = $request->reference_number;
                 }
             } else {
             	$newNumber = $request->number;
                 $newReferenceNumber = $request->reference_number;
             }
-          
+
             // if($request->number <= $lastNumber){
             //    $newNumber = (int)$lastNumber;
             //    $newNumber += 1;
@@ -266,7 +266,7 @@ class OutgoingLetterController extends Controller
             //    $newNumber = $request->number;
             //    $newReferenceNumber = $request->reference_number;
             //}
-          
+
             $newLetter['user_id'] = $user->id;
           	$newLetter['number'] = $newNumber;
             $newLetter['reference_number'] = $newReferenceNumber;
@@ -291,7 +291,7 @@ class OutgoingLetterController extends Controller
                     ]);
                 }
             }
-          
+
           	if ($request->hasFile('others')) {
                 foreach ($request->others as $other) {
                     $extension = $other->getClientOriginalExtension();
@@ -310,7 +310,7 @@ class OutgoingLetterController extends Controller
                     ]);
                 }
             }
-          
+
           	$cc = ['hafis.sani39@gmail.com'];
             $target = 'sekre.kapusdiklat@gmail.com';
 
@@ -329,6 +329,7 @@ class OutgoingLetterController extends Controller
                 ->route('transaction.outgoing.index')
                 ->with('success', __('menu.general.success'));
         } catch (\Throwable $exception) {
+            dd($exception);
             return back()->with('error', $exception->getMessage());
         }
     }
@@ -397,7 +398,7 @@ class OutgoingLetterController extends Controller
                     ]);
                 }
             }
-          
+
           	if ($request->hasFile('others')) {
                 foreach ($request->others as $other) {
                     $extension = $other->getClientOriginalExtension();
@@ -416,8 +417,8 @@ class OutgoingLetterController extends Controller
                     ]);
                 }
             }
-          
-          
+
+
           	$cc = ['hafis.sani39@gmail.com'];
             $user = auth()->user();
             $target = 'sekre.kapusdiklat@gmail.com';
@@ -432,7 +433,7 @@ class OutgoingLetterController extends Controller
             ];
 
             Mail::to($target)->cc($cc)->send(new UpdateOutgoingMail($pesan));
-          
+
             return redirect()->route('transaction.outgoing.index')->with('success', __('menu.general.success'));
         } catch (\Throwable $exception) {
             return back()->with('error', $exception->getMessage());
@@ -446,7 +447,7 @@ class OutgoingLetterController extends Controller
             // $outgoing->update($request->validated());
             if ($request->hasFile('attachments')) {
                 $attach = Attachment::where('letter_id', $outgoing_id)->where('esign_status', 1)->first();
-              	
+
               	if (isset($attach)) {
                     Storage::delete('public/attachments/' . $attach->filename);
                     foreach ($request->attachments as $attachment) {
@@ -487,10 +488,10 @@ class OutgoingLetterController extends Controller
                         ]);
                     }
                 }
-              
+
 
 				// SEND WA
-              
+
               	$updateLetter = Letter::where('id', $outgoing_id)->first();
               	$user = User::where('id', '=', $updateLetter['user_id'])->first();
 
@@ -507,7 +508,7 @@ class OutgoingLetterController extends Controller
                 ];
 
                 Mail::to($target)->cc($cc)->send(new EsignSuccessMail($pesan));
-                                  
+
                 return back()->with('success', __('menu.general.success'));
             }
             return back()->with('error', 'File tidak ada');

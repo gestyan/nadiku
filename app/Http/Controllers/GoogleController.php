@@ -11,6 +11,8 @@ use Exception;
 
 class GoogleController extends Controller
 {
+    public $user;
+
     /**
      * Create a new controller instance.
      *
@@ -28,9 +30,9 @@ class GoogleController extends Controller
      */
     public function handleGoogleCallback()
     {
-        // try {
         try {
-            $user = Socialite::driver('google')->user();
+            $user = Socialite::driver('google')->stateless()->user();
+            $this->user = $user;
             $finduser = User::where('email', $user->email)->first();
             if($finduser !== NULL){
                 Auth()->login($finduser);
@@ -41,9 +43,8 @@ class GoogleController extends Controller
         }
         catch(Exception $e)
         {
+            dd($this->user);
             return redirect()->route('login');
         }
-
-
     }
 }
