@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('path')->nullable();
             $table->string('filename');
             $table->string('extension')->default('pdf');
+            $table->boolean('esign_file')->default(false);
+            $table->boolean('esign_status')->default(false);
             $table->foreignId('letter_id')->constrained('letters')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate();
             $table->timestamps();

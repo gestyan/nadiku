@@ -230,6 +230,7 @@ class OutgoingLetterController extends Controller
      */
     public function store(StoreLetterRequest $request): RedirectResponse
     {
+        // dd($lastNumber = Letter::where('satker', $request->satker)->orderBy('number', 'DESC')->first());
         try {
             $user = auth()->user();
 
@@ -237,7 +238,16 @@ class OutgoingLetterController extends Controller
                 throw new \Exception(__('menu.transaction.outgoing_letter'));
             $newLetter = $request->validated();
 
-          	$lastNumber = Letter::where('satker', $request->satker)->orderBy('number', 'DESC')->first()->number;
+            $lastNumber = Letter::where('satker', $request->satker)->orderBy('number', 'DESC')->first();
+            if($lastNumber == NULL){
+                $lastNumber = 1;
+            }else{
+                $lastNumber = Letter::where('satker', $request->satker)->orderBy('number', 'DESC')->first()->number;
+            }
+
+            if($lastNumber == NULL) {
+                $lastNumber = 1;
+            }
 
           	// Check String Using preg_match() Function
 			$pattern = '/^[0-9]+$/'; // only number string
@@ -246,7 +256,7 @@ class OutgoingLetterController extends Controller
             	if($request->number <= (int) $lastNumber){
                     $newNumber = (int)$lastNumber;
                     $newNumber += 1;
-                    //$newNumber = str_pad($newNumber, 4, "0", STR_PAD_LEFT);
+                    $newNumber = str_pad($newNumber, 4, "0", STR_PAD_LEFT);
                     $newReferenceNumber = str_replace($request->number, $newNumber, $request->reference_number);
             	} else {
                 	$newNumber = $request->number;
@@ -311,25 +321,24 @@ class OutgoingLetterController extends Controller
                 }
             }
 
-          	$cc = ['hafis.sani39@gmail.com'];
-            $target = 'sekre.kapusdiklat@gmail.com';
+          	// $cc = ['hafis.sani39@gmail.com'];
+            // $target = 'sekre.kapusdiklat@gmail.com';
 
-            $pesan = [
-                'nomor_surat' => $newLetter['reference_number'],
-                'dari' => $user->name,
-                'tertuju' => $newLetter['to'],
-                'tanggal_surat' => $newLetter['letter_date'],
-                'kode_klasifikasi' => $newLetter['classification_code'],
-                'link' => route('transaction.outgoing.index') . "/" . $letter->id,
-            ];
+            // $pesan = [
+            //     'nomor_surat' => $newLetter['reference_number'],
+            //     'dari' => $user->name,
+            //     'tertuju' => $newLetter['to'],
+            //     'tanggal_surat' => $newLetter['letter_date'],
+            //     'kode_klasifikasi' => $newLetter['classification_code'],
+            //     'link' => route('transaction.outgoing.index') . "/" . $letter->id,
+            // ];
 
-            Mail::to($target)->cc($cc)->send(new EsignRequestMail($pesan));
+            // Mail::to($target)->cc($cc)->send(new EsignRequestMail($pesan));
 
             return redirect()
                 ->route('transaction.outgoing.index')
                 ->with('success', __('menu.general.success'));
         } catch (\Throwable $exception) {
-            dd($exception);
             return back()->with('error', $exception->getMessage());
         }
     }
@@ -419,20 +428,20 @@ class OutgoingLetterController extends Controller
             }
 
 
-          	$cc = ['hafis.sani39@gmail.com'];
-            $user = auth()->user();
-            $target = 'sekre.kapusdiklat@gmail.com';
+          	// $cc = ['hafis.sani39@gmail.com'];
+            // $user = auth()->user();
+            // $target = 'sekre.kapusdiklat@gmail.com';
 
-            $pesan = [
-                'nomor_surat' => $outgoing['reference_number'],
-                'dari' => $user->name,
-                'tertuju' => $outgoing['to'],
-                'tanggal_surat' => $outgoing['letter_date'],
-                'kode_klasifikasi' => $outgoing['classification_code'],
-                'link' => route('transaction.outgoing.index') . "/" . $outgoing->id,
-            ];
+            // $pesan = [
+            //     'nomor_surat' => $outgoing['reference_number'],
+            //     'dari' => $user->name,
+            //     'tertuju' => $outgoing['to'],
+            //     'tanggal_surat' => $outgoing['letter_date'],
+            //     'kode_klasifikasi' => $outgoing['classification_code'],
+            //     'link' => route('transaction.outgoing.index') . "/" . $outgoing->id,
+            // ];
 
-            Mail::to($target)->cc($cc)->send(new UpdateOutgoingMail($pesan));
+            // Mail::to($target)->cc($cc)->send(new UpdateOutgoingMail($pesan));
 
             return redirect()->route('transaction.outgoing.index')->with('success', __('menu.general.success'));
         } catch (\Throwable $exception) {
@@ -495,19 +504,19 @@ class OutgoingLetterController extends Controller
               	$updateLetter = Letter::where('id', $outgoing_id)->first();
               	$user = User::where('id', '=', $updateLetter['user_id'])->first();
 
-                $cc = ['hafis.sani39@gmail.com'];
-                $target = $user->email;
+                // $cc = ['hafis.sani39@gmail.com'];
+                // $target = $user->email;
 
-                $pesan = [
-                    'nomor_surat' => $updateLetter['reference_number'],
-                    'dari' => $user->name,
-                    'tertuju' => $updateLetter['to'],
-                    'tanggal_surat' => $updateLetter['letter_date'],
-                    'kode_klasifikasi' => $updateLetter['classification_code'],
-                    'link' => asset('storage/attachments/' . $filename),
-                ];
+                // $pesan = [
+                //     'nomor_surat' => $updateLetter['reference_number'],
+                //     'dari' => $user->name,
+                //     'tertuju' => $updateLetter['to'],
+                //     'tanggal_surat' => $updateLetter['letter_date'],
+                //     'kode_klasifikasi' => $updateLetter['classification_code'],
+                //     'link' => asset('storage/attachments/' . $filename),
+                // ];
 
-                Mail::to($target)->cc($cc)->send(new EsignSuccessMail($pesan));
+                // Mail::to($target)->cc($cc)->send(new EsignSuccessMail($pesan));
 
                 return back()->with('success', __('menu.general.success'));
             }

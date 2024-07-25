@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode', length:10);
             $table->string('deskripsi', length:100);
+            $table->timestamps();
         });
     }
 

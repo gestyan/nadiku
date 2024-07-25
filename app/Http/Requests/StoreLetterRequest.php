@@ -36,8 +36,8 @@ class StoreLetterRequest extends FormRequest
             'status' => __('model.letter.status'),
             'number' => __('model.letter.status'),
           	'satker' => __('model.letter.satker'),
-          	'to_email' => __('model.letter.to_email'),
-          	'bcc' => __('model.letter.bcc'),
+          	// 'to_email' => __('model.letter.to_email'),
+          	// 'bcc' => __('model.letter.bcc'),
         ];
     }
 
@@ -65,8 +65,8 @@ class StoreLetterRequest extends FormRequest
             'status' => ['required'],
             'number' => ['nullable'],
           	'satker' => ['nullable'],
-          	'to_email' => ['nullable'],
-          	'bcc' => ['nullable'],
+          	// 'to_email' => ['nullable'],
+          	// 'bcc' => ['nullable'],
         ];
     }
 }

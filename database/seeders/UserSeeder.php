@@ -24,5 +24,21 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
             'role' => Role::ADMIN->status(),
         ]);
+
+        User::factory()->create([
+            'name' => 'Gestyan R',
+            'email' => 'gestyanramadhan@gmail.com',
+            'phone' => '082121212121',
+            'password' => Hash::make('admin'),
+            'role' => Role::ADMIN->status(),
+        ]);
+
+        User::factory()->create([
+            'name' => 'IPDS 1111',
+            'email' => 'ipdsbps1111@gmail.com',
+            'phone' => '082121212121',
+            'password' => Hash::make('admin'),
+            'role' => Role::STAFF->status(),
+        ]);
     }
 }

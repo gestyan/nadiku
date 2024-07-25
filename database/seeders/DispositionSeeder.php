@@ -15,6 +15,6 @@ class DispositionSeeder extends Seeder
      */
     public function run(): void
     {
-        Disposition::factory()->count(15)->create();
+        // Disposition::factory()->count(5)->create();
     }
 }

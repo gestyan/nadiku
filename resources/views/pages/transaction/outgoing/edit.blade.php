@@ -16,8 +16,8 @@
                         <label for="status" class="form-label">{{ __('model.letter.status') }}</label>
                         <select class="form-select" id="status" name="status">
                             @foreach ($statuses as $status)
-                                <option {{ $status->code == $data->status ? 'selected' : '' }}
-                                    value="{{ $status->code }}">{{ $status->status }}
+                                <option {{ $status->code == $data->status ? 'selected' : '' }} value="{{ $status->code }}">
+                                    {{ $status->status }}
                                 </option>
                             @endforeach
                         </select>
@@ -31,8 +31,7 @@
                         <label for="satker" class="form-label">Satker</label>
                         <select class="form-select" id="satker" name="satker">
                             @foreach ($satkers as $satker)
-                                <option {{ $satker->kode == $data->satker ? 'selected' : '' }}
-                                    value="{{ $satker->kode }}">
+                                <option {{ $satker->kode == $data->satker ? 'selected' : '' }} value="{{ $satker->kode }}">
                                     {{ $satker->kode }}
                                 </option>
                             @endforeach
@@ -117,7 +116,7 @@
                 <div class="col-sm-12 col-12 col-md-12 col-lg-12 mt-2">
                     <x-input-textarea-form :value="$data->description ?? ''" name="description" :label="__('model.letter.description')" />
                 </div>
-                <div class="col-sm-12 col-12 col-md-12 col-lg-12">
+                {{-- <div class="col-sm-12 col-12 col-md-12 col-lg-12">
                     <p><b>Note:</b></p>
                     <ul>
                         <li>Penerima : Instansi atau orang yang akan menerima surat</li>
@@ -126,7 +125,7 @@
                         <li>Dokumen yang berhasil E-Sign akan diproses dan dikirim
                             melalui email BPS Kab. Aceh Utara oleh Sub Bagian Umum”</li>
                     </ul>
-                </div>
+                </div> --}}
             </div>
             <div class="card-footer pt-0">
                 <button class="btn btn-primary" type="submit">{{ __('menu.general.update') }}</button>
