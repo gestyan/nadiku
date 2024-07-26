@@ -1,8 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-    <x-breadcrumb
-        :values="[__('menu.transaction.menu'), __('menu.transaction.outgoing_letter'), __('menu.general.view')]">
+    <x-breadcrumb :values="[__('menu.transaction.menu'), __('menu.transaction.outgoing_letter'), __('menu.general.view')]">
     </x-breadcrumb>
 
     <x-letter-card :letter="$data">
@@ -32,15 +31,15 @@
 
                 <dt class="col-sm-3">{{ __('model.letter.to') }}</dt>
                 <dd class="col-sm-9">{{ $data->to }}</dd>
-              
-              	<dt class="col-sm-3">{{ __('model.letter.to_email') }}</dt>
+
+                {{-- <dt class="col-sm-3">{{ __('model.letter.to_email') }}</dt>
                 <dd class="col-sm-9">{{ $data->to_email }}</dd>
 
                 <dt class="col-sm-3">{{ __('model.letter.cc') }}</dt>
                 <dd class="col-sm-9">{{ $data->cc }}</dd>
 
                 <dt class="col-sm-3">{{ __('model.letter.bcc') }}</dt>
-                <dd class="col-sm-9">{{ $data->bcc }}</dd>
+                <dd class="col-sm-9">{{ $data->bcc }}</dd> --}}
 
                 <dt class="col-sm-3">{{ __('model.general.created_by') }}</dt>
                 <dd class="col-sm-9">{{ $data->user?->name }}</dd>
@@ -51,13 +50,12 @@
                 <dt class="col-sm-3">{{ __('model.general.updated_at') }}</dt>
                 <dd class="col-sm-9">{{ $data->formatted_updated_at }}</dd>
             </dl>
-          	<hr>
-            <div>
+            <hr>
+            {{-- <div>
                 <p><b>Badan Email:</b></p>
                 <p>{!! nl2br(e($data->description)) !!}</p>
 
-            </div>
+            </div> --}}
         </div>
     </x-letter-card>
-
 @endsection

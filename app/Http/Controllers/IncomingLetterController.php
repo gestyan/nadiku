@@ -42,7 +42,7 @@ class IncomingLetterController extends Controller
                     'search' => $request->search,
                 ]);
                 break;
-            
+
             case 'kabagum':
             	return view('pages.transaction.incoming.index', [
                     'data' => Letter::incoming()->render($request->search),
@@ -60,7 +60,7 @@ class IncomingLetterController extends Controller
                     ->appends([
                         'search' => $request->search,
                     ]);
-            
+
                 $search = $request->search;
                 return view(
                     'pages.transaction.incoming.index',
@@ -73,8 +73,8 @@ class IncomingLetterController extends Controller
                 break;
         }
     }
-  
-  
+
+
     /**
      * Display a listing of the resource for self.
      *
@@ -150,7 +150,7 @@ class IncomingLetterController extends Controller
         $agenda = __('menu.agenda.menu');
         $letter = __('menu.agenda.incoming_letter');
         $title = App::getLocale() == 'id' ? "$agenda $letter" : "$letter $agenda";
-      
+
       	$data = Letter::with(['allDispositions.disposition_to_name'])->incoming()->agenda($request->since, $request->until, $request->filter)->orderBy('disposition_number')->get();
       	//dd($data->first()->allDispositions->first()->content);
         return view('pages.transaction.incoming.print', [
@@ -201,8 +201,11 @@ class IncomingLetterController extends Controller
             if ($request->type != LetterType::INCOMING->type())
                 throw new \Exception(__('menu.transaction.incoming_letter'));
             $newLetter = $request->validated();
+
             $newLetter['user_id'] = $user->id;
+
             $letter = Letter::create($newLetter);
+
             if ($request->hasFile('attachments')) {
                 foreach ($request->attachments as $attachment) {
                     $extension = $attachment->getClientOriginalExtension();
@@ -220,49 +223,50 @@ class IncomingLetterController extends Controller
                 }
             }
 
-            if (isset($newLetter['cc'])) {
-                $target = '6281310354407';
-                $no_surat = $newLetter['reference_number'];
-                $pengirim = $newLetter['from'];
-                $tanggal_surat = $newLetter['letter_date'];
-                $kode_klasifikasi = $newLetter['classification_code'];
-                $link_surat = asset('storage/attachments/' . $filename);
+            // if (isset($newLetter['cc'])) {
+            //     $target = '6281310354407';
+            //     $no_surat = $newLetter['reference_number'];
+            //     $pengirim = $newLetter['from'];
+            //     $tanggal_surat = $newLetter['letter_date'];
+            //     $kode_klasifikasi = $newLetter['classification_code'];
+            //     $link_surat = asset('storage/attachments/' . $filename);
 
-                $header = "*[SURAT MASUK - {$kode_klasifikasi}]*";
+            //     $header = "*[SURAT MASUK - {$kode_klasifikasi}]*";
 
 
-                $data = array(
-                    "token" => "9l8cHixxXXMxLBcULmETeo9tBPHylx3H",
-                    "number" => $target,
-                    "message" => $header .
-                        "\r\n\r\nNomor Surat : {$no_surat}" .
-                        "\r\nPengirim : {$pengirim}" .
-                        "\r\nTanggal Surat : {$tanggal_surat}" .
-                        "\r\n\r\n_link :_ {$link_surat}",
+            //     $data = array(
+            //         "token" => "9l8cHixxXXMxLBcULmETeo9tBPHylx3H",
+            //         "number" => $target,
+            //         "message" => $header .
+            //             "\r\n\r\nNomor Surat : {$no_surat}" .
+            //             "\r\nPengirim : {$pengirim}" .
+            //             "\r\nTanggal Surat : {$tanggal_surat}" .
+            //             "\r\n\r\n_link :_ {$link_surat}",
 
-                );
+            //     );
 
-                $url = "http://103.121.197.184:3000/api/send";
-                $content = json_encode($data);
+            //     $url = "http://103.121.197.184:3000/api/send";
+            //     $content = json_encode($data);
 
-                $curl = curl_init($url);
-                curl_setopt($curl, CURLOPT_HEADER, false);
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt(
-                    $curl,
-                    CURLOPT_HTTPHEADER,
-                    array("Content-type: application/json")
-                );
-                curl_setopt($curl, CURLOPT_POST, true);
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+            //     $curl = curl_init($url);
+            //     curl_setopt($curl, CURLOPT_HEADER, false);
+            //     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            //     curl_setopt(
+            //         $curl,
+            //         CURLOPT_HTTPHEADER,
+            //         array("Content-type: application/json")
+            //     );
+            //     curl_setopt($curl, CURLOPT_POST, true);
+            //     curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
 
-                $json_response = curl_exec($curl);
-            }
+            //     $json_response = curl_exec($curl);
+            // }
 
             return redirect()
                 ->route('transaction.incoming.index')
                 ->with('success', __('menu.general.success'));
         } catch (\Throwable $exception) {
+            dd($exception);
             return back()->with('error', $exception->getMessage());
         }
     }

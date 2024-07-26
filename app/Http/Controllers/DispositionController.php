@@ -42,7 +42,7 @@ class DispositionController extends Controller
                     'search' => $request->search,
                 ]);
                 break;
-            
+
             case 'kabagum':
                 return view('pages.transaction.disposition.index', [
                     'data' => Disposition::render($letter, $request->search),
@@ -90,8 +90,6 @@ class DispositionController extends Controller
     public function store(StoreDispositionRequest $request, Letter $letter): RedirectResponse
     {
         try {
-          
-          	
             $variab = array();
             foreach ($request->input('to') as $key => $to) {
                 $user = User::where('id', '=', $to)->first();
@@ -120,7 +118,7 @@ class DispositionController extends Controller
             $perihal = $letter->note;
             $isi_disposisi = $request->content;
             //$link_surat = route('transaction.incoming.show', $letter);
-          	$link_surat = $letter->attachments->first()->path_url;
+          	// $link_surat = $letter->attachments->first()->path_url;
             $tenggat_waktu = date('d F Y', strtotime($request->due_date));
 
             $list = array(
@@ -131,16 +129,16 @@ class DispositionController extends Controller
                 'classification' => $klasifikasi,
                 'perihal' => $perihal,
                 'disposisi' => $isi_disposisi,
-                'link' => $link_surat,
+                // 'link' => $link_surat,
                 'due_date' => $tenggat_waktu,
             );
 
-            
-            if(in_array('watekhi@gmail.com', $emailTo)){
-                Mail::to($emailTo)->send(new DispositionMail($list));
-            } else {
-                Mail::to($emailTo)->cc('watekhi@gmail.com')->send(new DispositionMail($list));
-            }
+
+            // if(in_array('watekhi@gmail.com', $emailTo)){
+            //     Mail::to($emailTo)->send(new DispositionMail($list));
+            // } else {
+            //     Mail::to($emailTo)->cc('watekhi@gmail.com')->send(new DispositionMail($list));
+            // }
 
             return redirect()
                 ->route('transaction.disposition.index', $letter)

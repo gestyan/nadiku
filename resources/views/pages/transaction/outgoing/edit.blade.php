@@ -59,22 +59,22 @@
                 <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <x-input-form :value="$data->to" name="to" :label="__('model.letter.to')" />
                 </div>
-                <div class="col-sm-12 col-12 col-md-6 col-lg-4">
+                {{-- <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <x-input-form :value="$data->to_email ?? ''" name="to_email" :label="__('model.letter.to_email') . ' (Pisahkan dengan koma)'" />
                     <!-- <span class="text-danger"> Pisahkan dengan koma </span> -->
-                </div>
+                </div> --}}
                 <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <x-input-form :value="date('Y-m-d', strtotime($data->letter_date))" name="letter_date" :label="__('model.letter.letter_date')" type="date" />
                 </div>
                 <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <x-input-form :value="$data->note ?? ''" name="note" :label="__('model.letter.note')" />
                 </div>
-                <div class="col-sm-12 col-12 col-md-6 col-lg-4">
+                {{-- <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <x-input-form :value="$data->cc ?? ''" name="cc" :label="__('model.letter.cc') . ' [email]'" type="text" />
                 </div>
                 <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <x-input-form :value="$data->bcc ?? ''" name="bcc" :label="__('model.letter.bcc') . ' [email]'" type="text" />
-                </div>
+                </div> --}}
                 <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <div class="mb-3">
                         <label for="attachments" class="form-label">{{ __('model.letter.attachment') }}</label>
@@ -113,9 +113,9 @@
                         @endforeach
                     </ul>
                 </div>
-                <div class="col-sm-12 col-12 col-md-12 col-lg-12 mt-2">
+                {{-- <div class="col-sm-12 col-12 col-md-12 col-lg-12 mt-2">
                     <x-input-textarea-form :value="$data->description ?? ''" name="description" :label="__('model.letter.description')" />
-                </div>
+                </div> --}}
                 {{-- <div class="col-sm-12 col-12 col-md-12 col-lg-12">
                     <p><b>Note:</b></p>
                     <ul>

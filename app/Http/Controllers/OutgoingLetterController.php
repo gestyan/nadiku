@@ -239,14 +239,11 @@ class OutgoingLetterController extends Controller
             $newLetter = $request->validated();
 
             $lastNumber = Letter::where('satker', $request->satker)->orderBy('number', 'DESC')->first();
+
             if($lastNumber == NULL){
                 $lastNumber = 1;
             }else{
                 $lastNumber = Letter::where('satker', $request->satker)->orderBy('number', 'DESC')->first()->number;
-            }
-
-            if($lastNumber == NULL) {
-                $lastNumber = 1;
             }
 
           	// Check String Using preg_match() Function
