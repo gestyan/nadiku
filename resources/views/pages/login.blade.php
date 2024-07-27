@@ -68,31 +68,14 @@
                     <div class="app-brand justify-content-center">
                         <a href="{{ route('home') }}" class="app-brand-link gap-2">
                             <img src="/logo-black.png" alt="{{ config('app.name') }}" srcset="" width="75px">
+                            <span class="app-brand-text demo text-black fw-bolder ms-2">{{ config('app.name') }}</span>
                         </a>
                     </div>
 
                     <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
                         @csrf
-                        <div class="mb-3">
-                            <x-input-form
-                                name="email"
-                                type="email"
-                                :label="__('model.user.email')"
-                            />
-                        </div>
-                        <div class="mb-3">
-                            <x-input-form
-                                name="password"
-                                type="password"
-                                :label="__('model.user.password')"
-                            />
-                        </div>
-                        <div class="mt-2">
-                            <button class="btn btn-primary d-grid w-100" type="submit">{{ __('menu.auth.login') }}</button>
-                        </div>
-
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="{{ route('auth.google') }}" class="btn btn-secondary w-100">
+                            <a href="{{ route('auth.google') }}" class="btn btn-info w-100">
                                 <img src="/google-logo.png" class="me-2" alt="" width="30">
                                 <span>Continue with Google</span>
                             </a>
