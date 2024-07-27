@@ -17,7 +17,7 @@
 
     Tenggat Waktu : {{ $list['due_date'] }}<br><br>
 
-    Link Surat : {{ $list['link'] }}<br><br>
+    Detail : {{ $list['link'] }}<br><br>
 
     <i>Pesan ini disampaikan oleh Admin BPS Kab. Acceh Utara</i>
 </body>

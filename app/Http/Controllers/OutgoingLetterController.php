@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Mail;
 
 class OutgoingLetterController extends Controller
 {
+    public $cc = ['bps1111@bps.go.id'];
+    public $target = 'ibaldaus@gmail.com';
     /**
      * Display a listing of the resource.
      *
@@ -180,8 +182,8 @@ class OutgoingLetterController extends Controller
     {
       	$num2600 = Letter::outgoing()->where('satker', '11110')->orderBy('number', 'DESC')->first();
       	$num2610 = Letter::outgoing()->where('satker', '11111')->orderBy('number', 'DESC')->first();
-      	if($num2600 == NULL) $num2600 = '0000'; else $num2600 = (int) $num2600->number;
-        if($num2610 == NULL) $num2610 = '0000'; else $num2610 = (int) $num2610->number;
+      	if($num2600 == NULL) $num2600 = '1'; else $num2600 = (int) $num2600->number;
+        if($num2610 == NULL) $num2610 = '1'; else $num2610 = (int) $num2610->number;
 
       	return view('pages.transaction.outgoing.create', [
                 'classifications' => Classification::orderBy('code')->get(),
@@ -192,34 +194,6 @@ class OutgoingLetterController extends Controller
               	'num2610' => $num2610,
                 'numLetter' => Letter::outgoing()->orderBy('number', 'DESC')->first(),
             ]);
-
-      	/**
-      	if(Letter::outgoing()->count() != 0){
-          	if($num2600 == NULL) $num2600 = '0000';
-          	if($num2610 == NULL) $num2610 = '0000';
-            return view('pages.transaction.outgoing.create', [
-                'classifications' => Classification::all(),
-                'statuses' => LetterStatus::all(),
-                'users' => User::all(),
-              	'satkers' => Satker::all(),
-              	'num2600' => $num2600->number,
-              	'num2610' => $num2610->number,
-                'numLetter' => Letter::outgoing()->orderBy('number', 'DESC')->first()->number,
-            ]);
-        } else {
-          	if($num2600 == NULL) $num2600 = '0000';
-          	if($num2610 == NULL) $num2610 = '0000';
-        	return view('pages.transaction.outgoing.create', [
-                'classifications' => Classification::all(),
-                'statuses' => LetterStatus::all(),
-                'users' => User::all(),
-              	'satkers' => Satker::all(),
-              	'num2600' => $num2600,
-              	'num2610' => $num2610,
-              	'numLetter' => '0000',
-            ]);
-        }
-        */
     }
 
     /**
@@ -263,16 +237,6 @@ class OutgoingLetterController extends Controller
             	$newNumber = $request->number;
                 $newReferenceNumber = $request->reference_number;
             }
-
-            // if($request->number <= $lastNumber){
-            //    $newNumber = (int)$lastNumber;
-            //    $newNumber += 1;
-            //    $newNumber = str_pad($newNumber, 4, "0", STR_PAD_LEFT);
-            //    $newReferenceNumber = str_replace($request->number, $newNumber, $request->reference_number);
-            //} else {
-            //    $newNumber = $request->number;
-            //    $newReferenceNumber = $request->reference_number;
-            //}
 
             $newLetter['user_id'] = $user->id;
           	$newLetter['number'] = $newNumber;
@@ -318,24 +282,22 @@ class OutgoingLetterController extends Controller
                 }
             }
 
-          	// $cc = ['hafis.sani39@gmail.com'];
-            // $target = 'sekre.kapusdiklat@gmail.com';
+            $pesan = [
+                'nomor_surat' => $newLetter['reference_number'],
+                'dari' => $user->name,
+                'tertuju' => $newLetter['to'],
+                'tanggal_surat' => $newLetter['letter_date'],
+                'kode_klasifikasi' => $newLetter['classification_code'],
+                'link' => route('transaction.outgoing.index') . "/" . $letter->id,
+            ];
 
-            // $pesan = [
-            //     'nomor_surat' => $newLetter['reference_number'],
-            //     'dari' => $user->name,
-            //     'tertuju' => $newLetter['to'],
-            //     'tanggal_surat' => $newLetter['letter_date'],
-            //     'kode_klasifikasi' => $newLetter['classification_code'],
-            //     'link' => route('transaction.outgoing.index') . "/" . $letter->id,
-            // ];
-
-            // Mail::to($target)->cc($cc)->send(new EsignRequestMail($pesan));
+            Mail::to($this->target)->cc($this->cc)->send(new EsignRequestMail($pesan));
 
             return redirect()
                 ->route('transaction.outgoing.index')
                 ->with('success', __('menu.general.success'));
         } catch (\Throwable $exception) {
+            dd($exception);
             return back()->with('error', $exception->getMessage());
         }
     }
@@ -424,21 +386,18 @@ class OutgoingLetterController extends Controller
                 }
             }
 
+            $user = auth()->user();
 
-          	// $cc = ['hafis.sani39@gmail.com'];
-            // $user = auth()->user();
-            // $target = 'sekre.kapusdiklat@gmail.com';
+            $pesan = [
+                'nomor_surat' => $outgoing['reference_number'],
+                'dari' => $user->name,
+                'tertuju' => $outgoing['to'],
+                'tanggal_surat' => $outgoing['letter_date'],
+                'kode_klasifikasi' => $outgoing['classification_code'],
+                'link' => route('transaction.outgoing.index') . "/" . $outgoing->id,
+            ];
 
-            // $pesan = [
-            //     'nomor_surat' => $outgoing['reference_number'],
-            //     'dari' => $user->name,
-            //     'tertuju' => $outgoing['to'],
-            //     'tanggal_surat' => $outgoing['letter_date'],
-            //     'kode_klasifikasi' => $outgoing['classification_code'],
-            //     'link' => route('transaction.outgoing.index') . "/" . $outgoing->id,
-            // ];
-
-            // Mail::to($target)->cc($cc)->send(new UpdateOutgoingMail($pesan));
+            Mail::to($this->target)->cc($this->cc)->send(new UpdateOutgoingMail($pesan));
 
             return redirect()->route('transaction.outgoing.index')->with('success', __('menu.general.success'));
         } catch (\Throwable $exception) {
@@ -501,19 +460,18 @@ class OutgoingLetterController extends Controller
               	$updateLetter = Letter::where('id', $outgoing_id)->first();
               	$user = User::where('id', '=', $updateLetter['user_id'])->first();
 
-                // $cc = ['hafis.sani39@gmail.com'];
-                // $target = $user->email;
+                $target = $user->email;
 
-                // $pesan = [
-                //     'nomor_surat' => $updateLetter['reference_number'],
-                //     'dari' => $user->name,
-                //     'tertuju' => $updateLetter['to'],
-                //     'tanggal_surat' => $updateLetter['letter_date'],
-                //     'kode_klasifikasi' => $updateLetter['classification_code'],
-                //     'link' => asset('storage/attachments/' . $filename),
-                // ];
+                $pesan = [
+                    'nomor_surat' => $updateLetter['reference_number'],
+                    'dari' => $user->name,
+                    'tertuju' => $updateLetter['to'],
+                    'tanggal_surat' => $updateLetter['letter_date'],
+                    'kode_klasifikasi' => $updateLetter['classification_code'],
+                    'link' => asset('storage/attachments/' . $filename),
+                ];
 
-                // Mail::to($target)->cc($cc)->send(new EsignSuccessMail($pesan));
+                Mail::to($target)->cc($this->cc)->send(new EsignSuccessMail($pesan));
 
                 return back()->with('success', __('menu.general.success'));
             }

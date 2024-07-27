@@ -110,14 +110,14 @@ class DispositionController extends Controller
             $letter_status = LetterStatus::find($request->letter_status)->status;
 
             if (auth()->user()->role == 'admin')
-                $from = 'Suntono';
+                $from = 'Kepala BPS Kab. Aceh Utara';
             else
                 $from = $getFrom->name;
 
             $klasifikasi = Classification::where('code', $letter->classification_code)->first()->type;
             $perihal = $letter->note;
             $isi_disposisi = $request->content;
-            //$link_surat = route('transaction.incoming.show', $letter);
+            $link_surat = route('transaction.incoming.show', $letter);
           	// $link_surat = $letter->attachments->first()->path_url;
             $tenggat_waktu = date('d F Y', strtotime($request->due_date));
 
@@ -129,16 +129,11 @@ class DispositionController extends Controller
                 'classification' => $klasifikasi,
                 'perihal' => $perihal,
                 'disposisi' => $isi_disposisi,
-                // 'link' => $link_surat,
+                'link' => $link_surat,
                 'due_date' => $tenggat_waktu,
             );
 
-
-            // if(in_array('watekhi@gmail.com', $emailTo)){
-            //     Mail::to($emailTo)->send(new DispositionMail($list));
-            // } else {
-            //     Mail::to($emailTo)->cc('watekhi@gmail.com')->send(new DispositionMail($list));
-            // }
+            Mail::to($emailTo)->send(new DispositionMail($list));
 
             return redirect()
                 ->route('transaction.disposition.index', $letter)

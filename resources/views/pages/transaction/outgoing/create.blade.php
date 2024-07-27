@@ -63,10 +63,10 @@
                 <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <x-input-form name="to" :label="__('model.letter.to')" />
                 </div>
-                {{-- <div class="col-sm-12 col-12 col-md-6 col-lg-4">
+                <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <x-input-form name="to_email" :label="__('model.letter.to_email') . ' (Pisahkan dengan koma)'" />
                     <!-- <span class="text-danger"> Pisahkan dengan koma </span> -->
-                </div> --}}
+                </div>
                 <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <x-input-form name="letter_date" :label="__('model.letter.letter_date')" type="date" />
                 </div>
@@ -90,7 +90,7 @@
                         <span class="error invalid-feedback">{{ $errors->first('others') }}</span>
                     </div>
                 </div>
-                {{-- <div class="col-sm-12 col-12 col-md-6 col-lg-4">
+                <div class="col-sm-12 col-12 col-md-6 col-lg-4">
                     <x-input-form name="cc" :label="__('model.letter.cc') . ' [email]'" type="text" />
                 </div>
                 <div class="col-sm-12 col-12 col-md-6 col-lg-4">
@@ -108,7 +108,7 @@
                         <li>Dokumen yang berhasil E-Sign akan diproses dan dikirim
                             melalui email BPS Kab. Aceh Utara oleh Sub bagian umum”</li>
                     </ul>
-                </div> --}}
+                </div>
             </div>
             <div class="card-footer pt-0">
                 <button class="btn btn-primary" type="submit">{{ __('menu.general.save') }}</button>
