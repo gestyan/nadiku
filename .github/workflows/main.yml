@@ -1,0 +1,24 @@
+name: 🚀 Deploy testing on push
+
+on:
+  push:
+    branches: 
+    -  testing
+    
+jobs:
+  deploy:
+    name: 🎉 Auto Deploy Testing
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
+
+    - name: 📂 Sync files
+      uses: burnett01/rsync-deployments@7.0.1
+      with:
+        switches: -avzr --delete --exclude=".git" --exclude=".github"
+        path: /
+        remote_path: ${{ secrets.DEPLOY_BETA_PATH }}
+        remote_host: ${{ secrets.DEPLOY_HOST }}
+        remote_user: ${{ secrets.DEPLOY_USER }} 
+        remote_key: ${{ secrets.DEPLOY_KEY }}
