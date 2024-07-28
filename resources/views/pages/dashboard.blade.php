@@ -124,10 +124,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12 col-md-8 order-1">
+        <div class="col-lg-12 col-md-8 order-1 mb-4">
             <div class="row">
-                <h2><b>Flow Chart Surat Keluar</b></h2>
-                <img src="{{ asset('alur-masdipo-keluar.jpg') }}" alt="">
+                <h3 class="fw-bolder"><span class="fst-italic">Flowchart</span> Surat Keluar</b></h3>
+                <img src="{{ asset('flowchart_surat-keluar.jpg') }}" alt="">
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-8 order-1 mb-4">
+            <div class="row">
+                <h3 class="fw-bolder"><span class="fst-italic">Flowchart</span> Surat Masuk</b></h3>
+                <img src="{{ asset('flowchart_surat-masuk.jpg') }}" alt="">
             </div>
         </div>
     </div>
